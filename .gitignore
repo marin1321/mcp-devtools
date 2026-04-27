@@ -78,3 +78,6 @@ mcp-devtools-plan.md
 
 # Local Cursor IDE rules and config — personal workflow, not for the repo
 .cursor/
+
+# Local planning artifacts — internal task breakdowns, not for the public repo
+PLAN/
