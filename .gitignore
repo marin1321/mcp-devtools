@@ -75,3 +75,6 @@ tests/fixtures/tmp/
 
 # Internal planning doc — source of truth for the project, not for the repo
 mcp-devtools-plan.md
+
+# Local Cursor IDE rules and config — personal workflow, not for the repo
+.cursor/
