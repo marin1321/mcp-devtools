@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+.changeset/
+CHANGELOG.md
+mcp-devtools-plan.md

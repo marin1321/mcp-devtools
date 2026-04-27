@@ -1,0 +1,77 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnpm-store/
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Test output
+coverage/
+.nyc_output/
+*.lcov
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+*.pem
+*.key
+
+# Local config overrides
+mcp-devtools.local.json
+.mcp-devtools.local.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.recommended.json
+!.vscode/extensions.json
+*.swp
+*.swo
+.fleet/
+
+# Cache
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.prettiercache
+.vitest-cache/
+
+# npm publish artifacts
+*.tgz
+.npmrc.local
+
+# Optional debug
+.node_repl_history
+
+# Local DB fixtures
+tests/fixtures/*.sqlite
+tests/fixtures/*.db
+tests/fixtures/tmp/
+
+# Internal planning doc — source of truth for the project, not for the repo
+mcp-devtools-plan.md

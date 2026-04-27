@@ -1,0 +1,23 @@
+{
+  "$comment": "Sample mcp-devtools configuration. Copy to mcp-devtools.json and edit.",
+  "scope": "./",
+  "allowedCommands": ["npm", "node", "python", "git", "make", "docker"],
+  "commandTimeoutMs": 30000,
+  "commandOutputMaxBytes": 102400,
+  "databases": {
+    "default": {
+      "type": "postgresql",
+      "connectionString": "env:DATABASE_URL",
+      "readOnly": true,
+      "queryTimeoutMs": 10000,
+      "maxRows": 200
+    }
+  },
+  "logs": {
+    "paths": ["./logs/*.log"],
+    "maxLines": 500
+  },
+  "transport": "stdio",
+  "port": 3333,
+  "debug": false
+}
