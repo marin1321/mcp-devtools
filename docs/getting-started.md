@@ -5,10 +5,16 @@ a local config that exercises the shipped tools.
 
 ## 1. Install
 
-You can either run via `npx` or check out a local build for development.
+Install from npm:
 
 ```bash
-npx -y @oscarmarin/mcp-devtools
+npm install @oscarmarin/mcp-devtools
+```
+
+Or run directly without installing:
+
+```bash
+npx @oscarmarin/mcp-devtools
 ```
 
 For a local development build:
@@ -99,4 +105,4 @@ Negative checks (each must surface a typed error, not a crash):
 ## Next steps
 
 - [`configuration.md`](./configuration.md) — full config schema
-- [`tools/`](./tools/) — per-tool reference (Phase 2)
+- [`tools/`](./tools/) — per-tool reference

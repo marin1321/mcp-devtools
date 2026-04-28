@@ -50,8 +50,6 @@ describe("McpDevtoolsServer (integration via in-memory transport)", () => {
   });
 
   it.each([
-    ["read_logs", { path: "n/a", lines: 10 }],
-    ["get_env", { keys: ["FOO"] }],
     ["call_api", { specPath: "n/a", operationId: "op" }],
     ["parse_openapi", { path: "n/a" }],
   ])("returns NOT_IMPLEMENTED for the still-stub %s tool", async (name, args) => {

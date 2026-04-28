@@ -117,8 +117,8 @@ export async function createMysqlAdapter(config: DatabaseConfig): Promise<Databa
 
     async listTables(schema?: string): Promise<TableInfo[]> {
       const sql = schema
-        ? "SELECT table_schema, table_name, table_type FROM information_schema.tables WHERE table_schema = ? ORDER BY table_schema, table_name"
-        : "SELECT table_schema, table_name, table_type FROM information_schema.tables WHERE table_schema NOT IN ('mysql', 'information_schema', 'performance_schema', 'sys') ORDER BY table_schema, table_name";
+        ? "SELECT table_schema AS table_schema, table_name AS table_name, table_type AS table_type FROM information_schema.tables WHERE table_schema = ? ORDER BY table_schema, table_name"
+        : "SELECT table_schema AS table_schema, table_name AS table_name, table_type AS table_type FROM information_schema.tables WHERE table_schema NOT IN ('mysql', 'information_schema', 'performance_schema', 'sys') ORDER BY table_schema, table_name";
       const params = schema ? [schema] : [];
       const result = await this.query(sql, params);
       return result.rows.map((r) => ({
@@ -130,11 +130,11 @@ export async function createMysqlAdapter(config: DatabaseConfig): Promise<Databa
 
     async describeTable(table: string, schema?: string): Promise<ColumnInfo[]> {
       const sql = schema
-        ? `SELECT column_name, data_type, is_nullable, column_default, column_key
+        ? `SELECT column_name AS column_name, data_type AS data_type, is_nullable AS is_nullable, column_default AS column_default, column_key AS column_key
            FROM information_schema.columns
            WHERE table_name = ? AND table_schema = ?
            ORDER BY ordinal_position`
-        : `SELECT column_name, data_type, is_nullable, column_default, column_key
+        : `SELECT column_name AS column_name, data_type AS data_type, is_nullable AS is_nullable, column_default AS column_default, column_key AS column_key
            FROM information_schema.columns
            WHERE table_name = ? AND table_schema = DATABASE()
            ORDER BY ordinal_position`;

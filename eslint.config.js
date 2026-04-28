@@ -6,7 +6,14 @@ import prettierConfig from "eslint-config-prettier";
 
 export default [
   {
-    ignores: ["dist/**", "coverage/**", "node_modules/**", "*.config.js", "*.config.cjs"],
+    ignores: [
+      "dist/**",
+      "coverage/**",
+      "node_modules/**",
+      "*.config.js",
+      "*.config.cjs",
+      "vitest.integration.config.ts",
+    ],
   },
   js.configs.recommended,
   {

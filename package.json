@@ -68,6 +68,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
     "prepublishOnly": "npm run lint && npm run typecheck && npm run test && npm run build",
     "prepare": "[ -d .git ] && command -v husky >/dev/null 2>&1 && husky || true"
   },
