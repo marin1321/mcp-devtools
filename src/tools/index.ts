@@ -23,6 +23,7 @@ import { WriteFileInput, writeFileHandler } from "./filesystem/write-file.js";
 import { CallApiInput, callApiHandler } from "./openapi/call-api.js";
 import { ParseOpenApiInput, parseOpenApiHandler } from "./openapi/parse-openapi.js";
 import { GetEnvInput, getEnvHandler } from "./process/get-env.js";
+import { ListProcessesInput, listProcessesHandler } from "./process/list-processes.js";
 import { ReadLogsInput, readLogsHandler } from "./process/read-logs.js";
 import { RunCommandInput, runCommandHandler } from "./process/run-command.js";
 
@@ -40,6 +41,7 @@ export * from "./database/describe-table.js";
 export * from "./process/run-command.js";
 export * from "./process/read-logs.js";
 export * from "./process/get-env.js";
+export * from "./process/list-processes.js";
 
 export * from "./openapi/parse-openapi.js";
 export * from "./openapi/call-api.js";
@@ -132,6 +134,14 @@ export const allTools: readonly ToolDefinition[] = [
     description: "Return environment variables (process env or .env file) with optional masking.",
     inputSchema: GetEnvInput,
     handler: getEnvHandler,
+  }),
+  defineTool({
+    name: "list_processes",
+    title: "List processes",
+    description:
+      "List running processes, optionally filtered by name or listening port.",
+    inputSchema: ListProcessesInput,
+    handler: listProcessesHandler,
   }),
 
   defineTool({

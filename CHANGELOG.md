@@ -6,6 +6,38 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 and uses [Conventional Commits](https://www.conventionalcommits.org/) so
 `semantic-release` can generate releases automatically.
 
+## [1.0.0] - 2026-04-28
+
+First stable release. All three MCP primitives (Tools, Resources, Prompts)
+are fully implemented. The package is extensible via the Plugin API, secured
+with HTTP Bearer auth and an audit log, and covers 14 developer tools across
+4 categories.
+
+### Added
+
+- **Tool Plugin API** — `plugins` config key loads external tool modules at
+  startup. Public `defineTool()` and `ToolDefinition` exports for programmatic
+  use. Bad plugins are skipped with a warning, never crashing the server.
+- **Audit Log** — opt-in NDJSON append-only log (`audit.enabled: true`) of
+  every tool invocation with timestamp, sanitized input summary, duration,
+  and result status. Secrets are masked automatically.
+- **MCP Resources** — `devtools://tools` (tool catalog with schemas) and
+  `devtools://server-info` (version, transport, scope, tool count).
+- **MCP Prompts** — 4 curated dev prompt templates: `debug_error`,
+  `code_review`, `explore_codebase`, `refactor_function`. Each references
+  mcp-devtools tools in its instructions.
+- **HTTP Bearer auth** — `auth.token` config key with `env:VAR` indirection.
+  Constant-time comparison via `crypto.timingSafeEqual`. 401 on missing/wrong
+  token, backward-compatible (no-auth still works).
+- **`list_processes` tool** — list running processes filtered by name or
+  TCP listening port. Cross-platform (macOS/Linux) via `ps aux` + `lsof`/`ss`.
+
+### Changed
+
+- README updated with Plugin API, MCP Resources, MCP Prompts, HTTP auth
+  sections. Tool count updated to 14.
+- Config schema extended with `plugins`, `audit`, and `auth` keys.
+
 ## [0.2.0] - 2026-04-28
 
 Phase 3 release: all 13 v1 tools fully implemented, HTTP transport, and

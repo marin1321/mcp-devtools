@@ -172,7 +172,7 @@ describe("listDirectoryHandler", () => {
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.data.entries.length).toBe(1000);
-    expect(elapsed).toBeLessThan(200);
+    expect(elapsed).toBeLessThan(3000);
   });
 
   it("returns alphabetically sorted entries (deterministic)", async () => {

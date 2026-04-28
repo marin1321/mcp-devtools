@@ -2,6 +2,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import type { z } from "zod";
 
+import type { AuditLogger } from "./audit.js";
 import type { McpDevtoolsConfig } from "./types/config.js";
 import { McpDevtoolsError } from "./types/errors.js";
 import type { ToolResult } from "./types/tool-result.js";
@@ -117,6 +118,7 @@ export function registerTool(
   server: McpServer,
   definition: ToolDefinition,
   config: McpDevtoolsConfig,
+  auditLogger?: AuditLogger,
 ): void {
   server.registerTool(
     definition.name,
@@ -126,10 +128,40 @@ export function registerTool(
       inputSchema: definition.inputSchema.shape,
     },
     async (rawInput: unknown): Promise<CallToolResult> => {
+      const start = Date.now();
       try {
         const result = await definition.handler(rawInput, config);
+        if (auditLogger) {
+          const callToolResult = toolResultToCallToolResult(result);
+          auditLogger.log({
+            timestamp: new Date(start).toISOString(),
+            tool: definition.name,
+            inputSummary: rawInput,
+            durationMs: Date.now() - start,
+            ok: !callToolResult.isError,
+            ...(callToolResult.isError
+              ? {
+                  errorCode:
+                    (callToolResult.structuredContent as { code?: string } | undefined)?.code ??
+                    "UNKNOWN",
+                }
+              : {}),
+          });
+        }
         return toolResultToCallToolResult(result);
       } catch (error) {
+        if (auditLogger) {
+          const code =
+            error instanceof McpDevtoolsError ? error.code : "INTERNAL_ERROR";
+          auditLogger.log({
+            timestamp: new Date(start).toISOString(),
+            tool: definition.name,
+            inputSummary: rawInput,
+            durationMs: Date.now() - start,
+            ok: false,
+            errorCode: code,
+          });
+        }
         return errorToCallToolResult(error, definition.name);
       }
     },
@@ -144,9 +176,10 @@ export function registerAllTools(
   server: McpServer,
   tools: readonly ToolDefinition[],
   config: McpDevtoolsConfig,
+  auditLogger?: AuditLogger,
 ): void {
   for (const tool of tools) {
-    registerTool(server, tool, config);
+    registerTool(server, tool, config, auditLogger);
     logger.debug({ tool: tool.name }, "registered tool");
   }
 }

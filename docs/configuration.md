@@ -31,4 +31,31 @@ schema. Top-level keys:
 | `logs`                  | `{ paths: [], maxLines: 500 }`         | Log file paths exposed to `read_logs`.                |
 | `transport`             | `"stdio"`                              | `"stdio"` (default) or `"http"`.                      |
 | `port`                  | `3333`                                 | HTTP port (only when `transport: "http"`).            |
+| `auth`                  | `{}`                                   | Authentication config for HTTP transport.             |
 | `debug`                 | `false`                                | Force `LOG_LEVEL=debug`.                              |
+
+## Authentication
+
+When using `transport: "http"`, you can require clients to send a
+`Bearer` token with every request. Set the `auth.token` value in your
+config file:
+
+```json
+{
+  "transport": "http",
+  "port": 3333,
+  "auth": {
+    "token": "env:MCP_AUTH_TOKEN"
+  }
+}
+```
+
+The `token` field supports the same `env:VAR_NAME` indirection used for
+database connection strings, so secrets never need to be hardcoded.
+
+When `auth.token` is set, every HTTP request must include an
+`Authorization: Bearer <token>` header. Requests without a valid token
+receive a `401 Unauthorized` response.
+
+When `auth` is omitted or `token` is not set, all requests are accepted
+(backward compatible).
