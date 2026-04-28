@@ -1,0 +1,22 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Legacy Swagger API",
+    "version": "1.2.3"
+  },
+  "host": "legacy.example.com",
+  "basePath": "/api",
+  "schemes": ["https", "http"],
+  "paths": {
+    "/items": {
+      "get": {
+        "operationId": "getItems",
+        "summary": "Retrieve items",
+        "tags": ["items"],
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    }
+  }
+}

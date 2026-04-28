@@ -1,17 +1,13 @@
 # mcp-devtools
 
-[![npm version](https://img.shields.io/npm/v/mcp-devtools.svg?color=6366F1)](https://www.npmjs.com/package/mcp-devtools)
+[![npm version](https://img.shields.io/npm/v/@oscarmarin/mcp-devtools.svg?color=6366F1)](https://www.npmjs.com/package/@oscarmarin/mcp-devtools)
 [![CI](https://github.com/marin1321/mcp-devtools/actions/workflows/ci.yml/badge.svg)](https://github.com/marin1321/mcp-devtools/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/marin1321/mcp-devtools/branch/main/graph/badge.svg)](https://codecov.io/gh/marin1321/mcp-devtools)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](https://nodejs.org/)
 
 > **AI-native developer tools via [Model Context Protocol](https://spec.modelcontextprotocol.io).**
-> A production-grade MCP server that gives AI agents (Claude, Cursor, Copilot, Continue, …)
+> A production-grade MCP server that gives AI agents (Claude, Cursor, Copilot, Continue, ...)
 > safe, scoped access to your local development environment.
-
-> **Status:** Phase 1 release candidate (`v0.1.0-rc.1`). Ten of the fourteen
-> v1 tools are shipped behind hardened security boundaries; the remaining
-> four ship in later phases as `NOT_IMPLEMENTED` stubs that respond cleanly.
 
 ## Why
 
@@ -19,42 +15,61 @@ The MCP ecosystem is full of single-purpose tutorials and vendor-locked
 adapters. There is no well-maintained, multi-tool, framework-agnostic,
 production-quality MCP package for everyday developer tooling.
 
-`mcp-devtools` fills that gap with **14 tools across 4 categories** (filesystem,
-database, process, OpenAPI), built on patterns refined in production at
-[DailyBot](https://www.dailybot.com/): retry with jitter, structured logging,
-typed error taxonomy, version stamps, exponential backoff.
+`mcp-devtools` fills that gap with **13 tools across 4 categories** (filesystem,
+database, process, OpenAPI) and **two transport modes** (stdio + HTTP), built on
+patterns refined in production at [DailyBot](https://www.dailybot.com/): retry
+with jitter, structured logging, typed error taxonomy, and security-first design.
 
 ## Quick start
+
+### stdio (default)
 
 ```bash
 npx @oscarmarin/mcp-devtools
 ```
 
-Add it to Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+Add it to **Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
 ```json
 {
   "mcpServers": {
     "devtools": {
       "command": "npx",
-      "args": ["-y", "mcp-devtools"]
+      "args": ["-y", "@oscarmarin/mcp-devtools"]
     }
   }
 }
 ```
 
-Or Cursor (`~/.cursor/mcp.json`): same block.
+Or **Cursor** (`~/.cursor/mcp.json`): same block.
+
+### HTTP transport
+
+Create a `mcp-devtools.json` in your project root:
+
+```json
+{
+  "transport": "http",
+  "port": 3333
+}
+```
+
+Then start the server:
+
+```bash
+npx @oscarmarin/mcp-devtools
+```
+
+The MCP endpoint will be available at `http://localhost:3333`.
 
 ## Tools
 
-| Group      | Tools                                                                        | Status               |
-| ---------- | ---------------------------------------------------------------------------- | -------------------- |
-| Filesystem | `read_file`, `write_file`, `list_directory`, `search_files`, `get_file_info` | shipped              |
-| Database   | `query_db`, `list_tables`, `describe_table`                                  | shipped              |
-| Process    | `run_command`                                                                | shipped              |
-| Process    | `read_logs`, `get_env`                                                       | stub (Phase 2)       |
-| OpenAPI    | `parse_openapi`, `call_api`                                                  | stub (Phase 3)       |
-| Debug      | `echo_test`                                                                  | shipped (smoke tool) |
+| Group      | Tools                                                                        |
+| ---------- | ---------------------------------------------------------------------------- |
+| Filesystem | `read_file`, `write_file`, `list_directory`, `search_files`, `get_file_info` |
+| Database   | `query_db`, `list_tables`, `describe_table`                                  |
+| Process    | `run_command`, `read_logs`, `get_env`                                        |
+| OpenAPI    | `parse_openapi`, `call_api`                                                  |
 
 Per-tool reference: [`docs/tools/`](./docs/tools/).
 
@@ -83,21 +98,31 @@ Three non-bypassable controls:
    capped (default 200 rows). Queries run in `BEGIN READ ONLY ... ROLLBACK`
    on PostgreSQL.
 
-## Development
+Additional safety measures:
+
+- **Secret masking.** `get_env` automatically masks values matching common
+  secret patterns (`SECRET`, `TOKEN`, `PASSWORD`, `KEY`, etc.).
+- **OpenAPI host restriction.** `call_api` only sends requests to hosts listed
+  in the spec's `servers` array. Requests to unlisted hosts are rejected.
+- **Output capping.** All tools cap their output to prevent context flooding
+  (100KB for commands, 1MB for files, 200 rows for queries).
+
+## Contributing
 
 ```bash
-nvm use
+git clone https://github.com/marin1321/mcp-devtools.git
+cd mcp-devtools
 npm install
-cp .env.example .env
 npm run dev       # tsup --watch
 npm run test      # vitest
 npm run typecheck # tsc --noEmit
 npm run lint      # eslint .
 ```
 
-See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the full workflow.
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the full workflow and
+[`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) for community guidelines.
 
 ## License
 
-[MIT](./LICENSE) © Oscar Humberto Marín Molina —
+[MIT](./LICENSE) &copy; Oscar Humberto Marin Molina &mdash;
 [oscarmarindev.com](https://www.oscarmarindev.com)

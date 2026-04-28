@@ -49,16 +49,12 @@ describe("McpDevtoolsServer (integration via in-memory transport)", () => {
     expect(typeof (result.structuredContent as { receivedAt?: unknown }).receivedAt).toBe("string");
   });
 
-  it.each([
-    ["call_api", { specPath: "n/a", operationId: "op" }],
-    ["parse_openapi", { path: "n/a" }],
-  ])("returns NOT_IMPLEMENTED for the still-stub %s tool", async (name, args) => {
+  it("returns an error for call_api when spec file does not exist", async () => {
     const result = await client.callTool({
-      name,
-      arguments: args as Record<string, unknown>,
+      name: "call_api",
+      arguments: { specPath: "n/a", operationId: "op" },
     });
     expect(result.isError).toBe(true);
-    expect(result.structuredContent).toMatchObject({ code: "NOT_IMPLEMENTED" });
   });
 
   it("returns an isError result when the input fails schema validation", async () => {

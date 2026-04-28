@@ -73,12 +73,14 @@
     "prepare": "[ -d .git ] && command -v husky >/dev/null 2>&1 && husky || true"
   },
   "dependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "cosmiconfig": "^9.0.0",
     "dotenv": "^17.0.0",
     "mime-types": "^3.0.2",
     "picomatch": "^4.0.4",
     "pino": "^10.0.0",
+    "yaml": "^2.8.3",
     "zod": "^4.0.0"
   },
   "devDependencies": {
@@ -90,6 +92,7 @@
     "@types/node": "^20.14.0",
     "@types/pg": "^8.20.0",
     "@types/picomatch": "^4.0.3",
+    "@types/swagger-parser": "^4.0.3",
     "@typescript-eslint/eslint-plugin": "^8.59.0",
     "@typescript-eslint/parser": "^8.59.0",
     "@vitest/coverage-v8": "^4.0.0",

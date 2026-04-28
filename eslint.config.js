@@ -46,6 +46,12 @@ export default [
         NodeJS: "readonly",
         BufferEncoding: "readonly",
         performance: "readonly",
+        fetch: "readonly",
+        Request: "readonly",
+        RequestInit: "readonly",
+        Response: "readonly",
+        Headers: "readonly",
+        TextDecoder: "readonly",
       },
     },
     plugins: {

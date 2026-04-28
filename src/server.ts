@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
+import { createServer, type Server as HttpServer } from "node:http";
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 
 import { registerAllTools } from "./tool-registry.js";
 import { type ConnectionPool, createConnectionPool } from "./tools/database/connection-pool.js";
@@ -31,6 +33,7 @@ export class McpDevtoolsServer {
   private readonly config: McpDevtoolsConfig;
   private readonly server: McpServer;
   private readonly pool: ConnectionPool;
+  private httpServer: HttpServer | null = null;
   private started = false;
 
   constructor(config: McpDevtoolsConfig) {
@@ -59,8 +62,23 @@ export class McpDevtoolsServer {
     if (this.started) {
       return;
     }
-    const transport = createTransport(this.config);
+    const { transport, kind } = createTransport(this.config);
     await this.server.connect(transport);
+
+    if (kind === "http") {
+      const httpTransport = transport as StreamableHTTPServerTransport;
+      this.httpServer = createServer((req, res) => {
+        void httpTransport.handleRequest(req, res);
+      });
+      await new Promise<void>((resolve) => {
+        this.httpServer!.listen(this.config.port, () => resolve());
+      });
+      logger.info(
+        { port: this.config.port },
+        `mcp-devtools HTTP server listening on port ${this.config.port}`,
+      );
+    }
+
     this.started = true;
     logger.info(
       {
@@ -77,6 +95,14 @@ export class McpDevtoolsServer {
       return;
     }
     logger.info("mcp-devtools server stopping");
+
+    if (this.httpServer) {
+      await new Promise<void>((resolve, reject) => {
+        this.httpServer!.close((err) => (err ? reject(err) : resolve()));
+      });
+      this.httpServer = null;
+    }
+
     await this.pool.closeAll();
     await this.server.close();
     this.started = false;
@@ -84,6 +110,17 @@ export class McpDevtoolsServer {
 
   public getConfig(): McpDevtoolsConfig {
     return this.config;
+  }
+
+  /**
+   * Returns the address the HTTP server is listening on, or `null` if the
+   * server is not running in HTTP mode.
+   */
+  public getHttpAddress(): { port: number; host: string } | null {
+    if (!this.httpServer) return null;
+    const addr = this.httpServer.address();
+    if (addr === null || typeof addr === "string") return null;
+    return { port: addr.port, host: addr.address };
   }
 
   /**
