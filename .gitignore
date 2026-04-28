@@ -30,6 +30,7 @@ coverage/
 *.key
 
 # Local config overrides
+mcp-devtools.json
 mcp-devtools.local.json
 .mcp-devtools.local.*
 
