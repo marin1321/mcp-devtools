@@ -14,11 +14,7 @@ import { type ToolResult, ok } from "../types/tool-result.js";
  * users can verify their wiring.
  */
 export const EchoTestInputSchema = z.object({
-  message: z
-    .string()
-    .min(1)
-    .max(1024)
-    .describe("Arbitrary string the server will echo back"),
+  message: z.string().min(1).max(1024).describe("Arbitrary string the server will echo back"),
 });
 
 export type EchoTestInput = z.infer<typeof EchoTestInputSchema>;
@@ -28,9 +24,7 @@ export interface EchoTestOutput {
   receivedAt: string;
 }
 
-export async function echoTestHandler(
-  input: EchoTestInput,
-): Promise<ToolResult<EchoTestOutput>> {
+export async function echoTestHandler(input: EchoTestInput): Promise<ToolResult<EchoTestOutput>> {
   return Promise.resolve(
     ok({
       message: input.message,

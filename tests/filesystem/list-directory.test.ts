@@ -113,14 +113,20 @@ describe("listDirectoryHandler", () => {
 
   it("rejects an out-of-scope path", async () => {
     await expect(
-      listDirectoryHandler({ path: "/etc", depth: 0, includeHidden: false }, configFor(fixture.root)),
+      listDirectoryHandler(
+        { path: "/etc", depth: 0, includeHidden: false },
+        configFor(fixture.root),
+      ),
     ).rejects.toBeInstanceOf(ScopeViolationError);
   });
 
   it("rejects a path that points to a file", async () => {
     writeFileSync(path.join(fixture.root, "a.txt"), "a");
     await expect(
-      listDirectoryHandler({ path: "a.txt", depth: 0, includeHidden: false }, configFor(fixture.root)),
+      listDirectoryHandler(
+        { path: "a.txt", depth: 0, includeHidden: false },
+        configFor(fixture.root),
+      ),
     ).rejects.toBeInstanceOf(FileSystemError);
   });
 
@@ -140,20 +146,16 @@ describe("listDirectoryHandler", () => {
     expect(result.data.entries.length).toBe(5000);
   });
 
-  it(
-    "does not hang on a symlink loop",
-    async () => {
-      const loopDir = path.join(fixture.root, "loop-dir");
-      mkdirSync(loopDir, { recursive: true });
-      symlinkSync(loopDir, path.join(loopDir, "self"));
-      const result = await listDirectoryHandler(
-        { path: "loop-dir", depth: 5, includeHidden: false },
-        configFor(fixture.root),
-      );
-      expect(result.ok).toBe(true);
-    },
-    5000,
-  );
+  it("does not hang on a symlink loop", async () => {
+    const loopDir = path.join(fixture.root, "loop-dir");
+    mkdirSync(loopDir, { recursive: true });
+    symlinkSync(loopDir, path.join(loopDir, "self"));
+    const result = await listDirectoryHandler(
+      { path: "loop-dir", depth: 5, includeHidden: false },
+      configFor(fixture.root),
+    );
+    expect(result.ok).toBe(true);
+  }, 5000);
 
   it("lists 1000 files in well under 200ms", async () => {
     const dir = path.join(fixture.root, "perf");

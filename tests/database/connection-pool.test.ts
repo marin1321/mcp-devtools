@@ -22,7 +22,15 @@ describe("createConnectionPool", () => {
   it("instantiates an adapter on first get and caches it", async () => {
     const factory = vi.fn(() => Promise.resolve(makeAdapter("a")));
     const pool = createConnectionPool(
-      { default: { type: "sqlite", connectionString: ":memory:", readOnly: true, queryTimeoutMs: 1000, maxRows: 100 } },
+      {
+        default: {
+          type: "sqlite",
+          connectionString: ":memory:",
+          readOnly: true,
+          queryTimeoutMs: 1000,
+          maxRows: 100,
+        },
+      },
       { sqlite: factory },
     );
     const a = await pool.get("default");
@@ -34,12 +42,21 @@ describe("createConnectionPool", () => {
   it("dedupes concurrent gets for the same name", async () => {
     let resolveAdapter: (a: DatabaseAdapter) => void = () => undefined;
     const factory = vi.fn(
-      () => new Promise<DatabaseAdapter>((r) => {
-        resolveAdapter = r;
-      }),
+      () =>
+        new Promise<DatabaseAdapter>((r) => {
+          resolveAdapter = r;
+        }),
     );
     const pool = createConnectionPool(
-      { x: { type: "sqlite", connectionString: ":memory:", readOnly: true, queryTimeoutMs: 1000, maxRows: 100 } },
+      {
+        x: {
+          type: "sqlite",
+          connectionString: ":memory:",
+          readOnly: true,
+          queryTimeoutMs: 1000,
+          maxRows: 100,
+        },
+      },
       { sqlite: factory },
     );
     const p1 = pool.get("x");
@@ -60,14 +77,23 @@ describe("createConnectionPool", () => {
     const adapterB = makeAdapter("b");
     const pool = createConnectionPool(
       {
-        a: { type: "sqlite", connectionString: ":memory:", readOnly: true, queryTimeoutMs: 1000, maxRows: 100 },
-        b: { type: "sqlite", connectionString: ":memory:", readOnly: true, queryTimeoutMs: 1000, maxRows: 100 },
+        a: {
+          type: "sqlite",
+          connectionString: ":memory:",
+          readOnly: true,
+          queryTimeoutMs: 1000,
+          maxRows: 100,
+        },
+        b: {
+          type: "sqlite",
+          connectionString: ":memory:",
+          readOnly: true,
+          queryTimeoutMs: 1000,
+          maxRows: 100,
+        },
       },
       {
-        sqlite: vi
-          .fn()
-          .mockResolvedValueOnce(adapterA)
-          .mockResolvedValueOnce(adapterB),
+        sqlite: vi.fn().mockResolvedValueOnce(adapterA).mockResolvedValueOnce(adapterB),
       },
     );
     await pool.get("a");
@@ -83,7 +109,15 @@ describe("createConnectionPool", () => {
       .mockRejectedValueOnce(new Error("boom"))
       .mockResolvedValueOnce(makeAdapter("ok"));
     const pool = createConnectionPool(
-      { c: { type: "sqlite", connectionString: ":memory:", readOnly: true, queryTimeoutMs: 1000, maxRows: 100 } },
+      {
+        c: {
+          type: "sqlite",
+          connectionString: ":memory:",
+          readOnly: true,
+          queryTimeoutMs: 1000,
+          maxRows: 100,
+        },
+      },
       { sqlite: factory },
     );
     await expect(pool.get("c")).rejects.toThrow("boom");

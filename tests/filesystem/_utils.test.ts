@@ -8,11 +8,7 @@ import {
   pathIsHidden,
   resolveWithinScope,
 } from "../../src/tools/filesystem/_utils.js";
-import {
-  FileSystemError,
-  ScopeViolationError,
-  ValidationError,
-} from "../../src/types/errors.js";
+import { FileSystemError, ScopeViolationError, ValidationError } from "../../src/types/errors.js";
 import { createScopeFixture, type ScopeFixture } from "../fixtures/scope/setup.js";
 
 describe("isWithinPath", () => {
@@ -71,9 +67,7 @@ describe("assertWithinScope (sync, no IO)", () => {
   });
 
   it("returns the absolute path for absolute inputs inside scope", () => {
-    expect(assertWithinScope(scope, path.join(scope, "foo.txt"))).toBe(
-      path.join(scope, "foo.txt"),
-    );
+    expect(assertWithinScope(scope, path.join(scope, "foo.txt"))).toBe(path.join(scope, "foo.txt"));
   });
 
   it("throws ScopeViolationError for absolute paths outside scope", () => {

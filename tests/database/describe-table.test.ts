@@ -1,6 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { __resetPoolCacheForTests, __setPoolFactoryForTests } from "../../src/tools/database/_pool.js";
+import {
+  __resetPoolCacheForTests,
+  __setPoolFactoryForTests,
+} from "../../src/tools/database/_pool.js";
 import type { DatabaseAdapter } from "../../src/tools/database/connection-pool.js";
 import { describeTableHandler } from "../../src/tools/database/describe-table.js";
 import { McpDevtoolsConfigSchema } from "../../src/types/config.js";
@@ -84,9 +87,27 @@ describe("describeTableHandler", () => {
       query: vi.fn(),
       listTables: vi.fn(),
       describeTable: vi.fn().mockResolvedValue([
-        { name: "user_id", dataType: "integer", nullable: false, defaultValue: null, isPrimaryKey: true },
-        { name: "role_id", dataType: "integer", nullable: false, defaultValue: null, isPrimaryKey: true },
-        { name: "granted_at", dataType: "timestamp", nullable: true, defaultValue: null, isPrimaryKey: false },
+        {
+          name: "user_id",
+          dataType: "integer",
+          nullable: false,
+          defaultValue: null,
+          isPrimaryKey: true,
+        },
+        {
+          name: "role_id",
+          dataType: "integer",
+          nullable: false,
+          defaultValue: null,
+          isPrimaryKey: true,
+        },
+        {
+          name: "granted_at",
+          dataType: "timestamp",
+          nullable: true,
+          defaultValue: null,
+          isPrimaryKey: false,
+        },
       ]),
       close: vi.fn(),
     };

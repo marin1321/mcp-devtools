@@ -108,7 +108,7 @@ export async function getFileInfoHandler(
     modifiedAt: stats.mtime.toISOString(),
     createdAt: stats.birthtime.toISOString(),
     isSymlink,
-    mime: type === "file" ? (mime.lookup(lexicalPath) || null) : null,
+    mime: type === "file" ? mime.lookup(lexicalPath) || null : null,
   };
 
   if (isSymlink) {

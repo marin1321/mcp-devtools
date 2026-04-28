@@ -5,11 +5,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { readFileHandler } from "../../src/tools/filesystem/read-file.js";
 import { McpDevtoolsConfigSchema } from "../../src/types/config.js";
-import {
-  FileSystemError,
-  ScopeViolationError,
-  ValidationError,
-} from "../../src/types/errors.js";
+import { FileSystemError, ScopeViolationError, ValidationError } from "../../src/types/errors.js";
 import { createScopeFixture, type ScopeFixture } from "../fixtures/scope/setup.js";
 
 function configFor(scope: string) {
@@ -124,9 +120,9 @@ describe("readFileHandler", () => {
 
   it("rejects directories with EISDIR", async () => {
     mkdirSync(path.join(fixture.root, "dir"), { recursive: true });
-    await expect(
-      readFileHandler({ path: "dir" }, configFor(fixture.root)),
-    ).rejects.toBeInstanceOf(FileSystemError);
+    await expect(readFileHandler({ path: "dir" }, configFor(fixture.root))).rejects.toBeInstanceOf(
+      FileSystemError,
+    );
   });
 
   it("rejects non-existent files with FileSystemError", async () => {

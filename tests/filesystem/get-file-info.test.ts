@@ -37,7 +37,9 @@ describe("getFileInfoHandler", () => {
   });
 
   it("does not return lines for a binary file", async () => {
-    const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d]);
+    const png = Buffer.from([
+      0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,
+    ]);
     writeFileSync(path.join(fixture.root, "img.png"), png);
     const result = await getFileInfoHandler({ path: "img.png" }, configFor(fixture.root));
     expect(result.ok).toBe(true);
@@ -57,10 +59,7 @@ describe("getFileInfoHandler", () => {
   });
 
   it("describes a symlink to an in-scope file", async () => {
-    const result = await getFileInfoHandler(
-      { path: "link-to-inside" },
-      configFor(fixture.root),
-    );
+    const result = await getFileInfoHandler({ path: "link-to-inside" }, configFor(fixture.root));
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.data.type).toBe("symlink");
@@ -70,10 +69,7 @@ describe("getFileInfoHandler", () => {
   });
 
   it("flags a symlink whose target escapes scope without throwing", async () => {
-    const result = await getFileInfoHandler(
-      { path: "link-to-outside" },
-      configFor(fixture.root),
-    );
+    const result = await getFileInfoHandler({ path: "link-to-outside" }, configFor(fixture.root));
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.data.isSymlink).toBe(true);

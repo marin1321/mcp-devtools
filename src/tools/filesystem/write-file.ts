@@ -73,10 +73,13 @@ async function ensureParent(parent: string, createDirs: boolean): Promise<void> 
     return;
   }
   if (!createDirs) {
-    throw new FileSystemError("Parent directory does not exist (set createDirs=true to create it)", {
-      parent,
-      code: "ENOENT",
-    });
+    throw new FileSystemError(
+      "Parent directory does not exist (set createDirs=true to create it)",
+      {
+        parent,
+        code: "ENOENT",
+      },
+    );
   }
   try {
     await mkdir(parent, { recursive: true });

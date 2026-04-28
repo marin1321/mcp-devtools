@@ -77,10 +77,7 @@ describe("queryDbHandler", () => {
 
   it("rejects multi-statement queries", async () => {
     await expect(
-      queryDbHandler(
-        { connection: "default", sql: "SELECT 1; SELECT 2", params: [] },
-        configFor(),
-      ),
+      queryDbHandler({ connection: "default", sql: "SELECT 1; SELECT 2", params: [] }, configFor()),
     ).rejects.toBeInstanceOf(ReadOnlyViolationError);
   });
 
@@ -161,10 +158,7 @@ describe("queryDbHandler", () => {
 
   it("rejects an unknown connection name with ConfigError", async () => {
     await expect(
-      queryDbHandler(
-        { connection: "missing", sql: "SELECT 1", params: [] },
-        configFor(),
-      ),
+      queryDbHandler({ connection: "missing", sql: "SELECT 1", params: [] }, configFor()),
     ).rejects.toBeInstanceOf(ConfigError);
   });
 

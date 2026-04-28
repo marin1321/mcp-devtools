@@ -1,6 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { __resetPoolCacheForTests, __setPoolFactoryForTests } from "../../src/tools/database/_pool.js";
+import {
+  __resetPoolCacheForTests,
+  __setPoolFactoryForTests,
+} from "../../src/tools/database/_pool.js";
 import type { DatabaseAdapter } from "../../src/tools/database/connection-pool.js";
 import { listTablesHandler } from "../../src/tools/database/list-tables.js";
 import { McpDevtoolsConfigSchema } from "../../src/types/config.js";
@@ -46,9 +49,9 @@ describe("listTablesHandler", () => {
   });
 
   it("rejects an unknown connection with ConfigError", async () => {
-    await expect(
-      listTablesHandler({ connection: "unknown" }, realConfig()),
-    ).rejects.toBeInstanceOf(ConfigError);
+    await expect(listTablesHandler({ connection: "unknown" }, realConfig())).rejects.toBeInstanceOf(
+      ConfigError,
+    );
   });
 
   it("forwards a `schema` arg to the adapter", async () => {
@@ -84,8 +87,8 @@ describe("listTablesHandler", () => {
       close: vi.fn(),
     };
     injectAdapter(adapter);
-    await expect(
-      listTablesHandler({ connection: "default" }, realConfig()),
-    ).rejects.toBeInstanceOf(DatabaseError);
+    await expect(listTablesHandler({ connection: "default" }, realConfig())).rejects.toBeInstanceOf(
+      DatabaseError,
+    );
   });
 });

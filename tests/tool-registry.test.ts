@@ -132,7 +132,10 @@ describe("registerTool", () => {
     registerTool(fake as unknown as Parameters<typeof registerTool>[0], def, config);
 
     const wrapped = fake.registerTool.mock.calls[0]?.[2] as (input: unknown) => Promise<unknown>;
-    const result = (await wrapped({})) as { isError?: boolean; structuredContent?: { code?: string } };
+    const result = (await wrapped({})) as {
+      isError?: boolean;
+      structuredContent?: { code?: string };
+    };
     expect(result.isError).toBe(true);
     expect(result.structuredContent?.code).toBe("BOOM");
   });
@@ -151,7 +154,10 @@ describe("registerTool", () => {
     registerTool(fake as unknown as Parameters<typeof registerTool>[0], def, config);
 
     const wrapped = fake.registerTool.mock.calls[0]?.[2] as (input: unknown) => Promise<unknown>;
-    const result = (await wrapped({})) as { isError?: boolean; structuredContent?: { code?: string } };
+    const result = (await wrapped({})) as {
+      isError?: boolean;
+      structuredContent?: { code?: string };
+    };
     expect(result.isError).toBe(true);
     expect(result.structuredContent?.code).toBe("SCOPE_VIOLATION");
   });
@@ -170,7 +176,10 @@ describe("registerTool", () => {
     registerTool(fake as unknown as Parameters<typeof registerTool>[0], def, config);
 
     const wrapped = fake.registerTool.mock.calls[0]?.[2] as (input: unknown) => Promise<unknown>;
-    const result = (await wrapped({})) as { isError?: boolean; structuredContent?: { code?: string } };
+    const result = (await wrapped({})) as {
+      isError?: boolean;
+      structuredContent?: { code?: string };
+    };
     expect(result.isError).toBe(true);
     expect(result.structuredContent?.code).toBe("INTERNAL_ERROR");
   });

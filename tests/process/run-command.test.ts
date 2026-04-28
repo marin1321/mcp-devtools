@@ -194,10 +194,7 @@ describe("runCommandHandler", () => {
     const result = await runCommandHandler(
       {
         command: "node",
-        args: [
-          "-e",
-          "process.on('SIGTERM',()=>{}), setInterval(()=>{}, 100)",
-        ],
+        args: ["-e", "process.on('SIGTERM',()=>{}), setInterval(()=>{}, 100)"],
         timeoutMs: 200,
       },
       configFor(scope),

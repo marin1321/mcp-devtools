@@ -30,9 +30,7 @@ interface MysqlPromiseModule {
 
 let mysqlLoaderOverride: (() => Promise<MysqlPromiseModule>) | null = null;
 
-export function __setMysqlLoaderForTests(
-  loader: (() => Promise<MysqlPromiseModule>) | null,
-): void {
+export function __setMysqlLoaderForTests(loader: (() => Promise<MysqlPromiseModule>) | null): void {
   mysqlLoaderOverride = loader;
 }
 
@@ -41,7 +39,9 @@ async function loadMysql(): Promise<MysqlPromiseModule> {
     if (mysqlLoaderOverride !== null) {
       return await mysqlLoaderOverride();
     }
-    const mod = (await import("mysql2/promise")) as unknown as { default?: MysqlPromiseModule } & MysqlPromiseModule;
+    const mod = (await import("mysql2/promise")) as unknown as {
+      default?: MysqlPromiseModule;
+    } & MysqlPromiseModule;
     return mod.default ?? mod;
   } catch (error) {
     const errno = error as NodeJS.ErrnoException;

@@ -9,7 +9,10 @@ import {
 } from "../connection-pool.js";
 
 interface PgClient {
-  query(textOrConfig: string | { text: string; values?: unknown[] }, values?: unknown[]): Promise<PgResult>;
+  query(
+    textOrConfig: string | { text: string; values?: unknown[] },
+    values?: unknown[],
+  ): Promise<PgResult>;
   release(): void;
 }
 
@@ -102,7 +105,7 @@ export async function createPostgresAdapter(config: DatabaseConfig): Promise<Dat
           return {
             rows: result.rows ?? [],
             columns,
-            rowCount: result.rowCount ?? (result.rows?.length ?? 0),
+            rowCount: result.rowCount ?? result.rows?.length ?? 0,
           };
         } catch (error) {
           if (config.readOnly) {

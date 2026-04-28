@@ -58,7 +58,8 @@ export const allTools: readonly ToolDefinition[] = [
   defineTool({
     name: "write_file",
     title: "Write file",
-    description: "Write a file atomically inside the configured scope (writes to a temp file then renames).",
+    description:
+      "Write a file atomically inside the configured scope (writes to a temp file then renames).",
     inputSchema: WriteFileInput,
     handler: writeFileHandler,
   }),
@@ -73,14 +74,16 @@ export const allTools: readonly ToolDefinition[] = [
   defineTool({
     name: "search_files",
     title: "Search files",
-    description: "Search for a pattern (literal or regex) across files inside the configured scope.",
+    description:
+      "Search for a pattern (literal or regex) across files inside the configured scope.",
     inputSchema: SearchFilesInput,
     handler: searchFilesHandler,
   }),
   defineTool({
     name: "get_file_info",
     title: "Get file info",
-    description: "Return metadata (size, type, MIME, line count, symlink info) for a file or directory.",
+    description:
+      "Return metadata (size, type, MIME, line count, symlink info) for a file or directory.",
     inputSchema: GetFileInfoInput,
     handler: getFileInfoHandler,
   }),

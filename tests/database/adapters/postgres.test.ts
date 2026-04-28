@@ -12,7 +12,10 @@ interface Call {
   values?: unknown[];
 }
 
-function buildMockedPg(rows: Record<string, unknown>[] = [], fields: { name: string; dataTypeID: number }[] = []) {
+function buildMockedPg(
+  rows: Record<string, unknown>[] = [],
+  fields: { name: string; dataTypeID: number }[] = [],
+) {
   const calls: Call[] = [];
   const release = vi.fn();
   const client = {
@@ -148,8 +151,18 @@ describe("postgres adapter (mocked)", () => {
           if (text.includes("information_schema.columns")) {
             return {
               rows: [
-                { column_name: "id", data_type: "integer", is_nullable: "NO", column_default: "nextval(...)" },
-                { column_name: "email", data_type: "text", is_nullable: "YES", column_default: null },
+                {
+                  column_name: "id",
+                  data_type: "integer",
+                  is_nullable: "NO",
+                  column_default: "nextval(...)",
+                },
+                {
+                  column_name: "email",
+                  data_type: "text",
+                  is_nullable: "YES",
+                  column_default: null,
+                },
               ],
               rowCount: 2,
               fields: [],
@@ -173,7 +186,13 @@ describe("postgres adapter (mocked)", () => {
     const adapter = await createPostgresAdapter(pgConfig(true));
     const cols = await adapter.describeTable("users");
     expect(cols).toEqual([
-      { name: "id", dataType: "integer", nullable: false, defaultValue: "nextval(...)", isPrimaryKey: true },
+      {
+        name: "id",
+        dataType: "integer",
+        nullable: false,
+        defaultValue: "nextval(...)",
+        isPrimaryKey: true,
+      },
       { name: "email", dataType: "text", nullable: true, defaultValue: null, isPrimaryKey: false },
     ]);
     await adapter.close();

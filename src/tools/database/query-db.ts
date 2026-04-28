@@ -9,11 +9,7 @@ import {
 } from "../../types/errors.js";
 import { type ToolResult, ok } from "../../types/tool-result.js";
 
-import {
-  __resetPoolCacheForTests,
-  __setPoolFactoryForTests,
-  getPool,
-} from "./_pool.js";
+import { __resetPoolCacheForTests, __setPoolFactoryForTests, getPool } from "./_pool.js";
 import { isReadOnlySql } from "./_sql-guard.js";
 import type { DatabaseAdapter } from "./connection-pool.js";
 
@@ -97,10 +93,9 @@ export async function queryDbHandler(
     if (error instanceof DatabaseError) {
       throw error;
     }
-    throw new DatabaseError(
-      error instanceof Error ? error.message : String(error),
-      { sql: input.sql.slice(0, 200) },
-    );
+    throw new DatabaseError(error instanceof Error ? error.message : String(error), {
+      sql: input.sql.slice(0, 200),
+    });
   }
   const durationMs = Math.round(performance.now() - start);
 

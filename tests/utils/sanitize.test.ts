@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  maskSecretsInText,
-  stripShellMetachars,
-  truncateBytes,
-} from "../../src/utils/sanitize.js";
+import { maskSecretsInText, stripShellMetachars, truncateBytes } from "../../src/utils/sanitize.js";
 
 describe("stripShellMetachars", () => {
   it("removes shell-significant characters", () => {

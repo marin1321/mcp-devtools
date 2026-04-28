@@ -24,9 +24,7 @@ describe("retry", () => {
 
   it("rethrows after exhausting attempts", async () => {
     const fn = vi.fn().mockRejectedValue(new Error("boom"));
-    await expect(retry(fn, { attempts: 2, baseDelayMs: 1, maxDelayMs: 1 })).rejects.toThrow(
-      "boom",
-    );
+    await expect(retry(fn, { attempts: 2, baseDelayMs: 1, maxDelayMs: 1 })).rejects.toThrow("boom");
     expect(fn).toHaveBeenCalledTimes(2);
   });
 

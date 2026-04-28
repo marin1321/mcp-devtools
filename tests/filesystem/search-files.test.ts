@@ -15,7 +15,10 @@ function configFor(scope: string) {
 function buildSearchTree(root: string): void {
   mkdirSync(path.join(root, "src"), { recursive: true });
   writeFileSync(path.join(root, "src", "a.ts"), "const greet = 'hello';\nconst world = 'WORLD';\n");
-  writeFileSync(path.join(root, "src", "b.ts"), "function hello(name) {\n  return name + ' world';\n}\n");
+  writeFileSync(
+    path.join(root, "src", "b.ts"),
+    "function hello(name) {\n  return name + ' world';\n}\n",
+  );
   writeFileSync(
     path.join(root, "src", "c.md"),
     "# Hello world\n\nThis is a paragraph.\nHELLO again.\n",
@@ -47,7 +50,15 @@ describe("searchFilesHandler", () => {
 
   it("matches a literal pattern across multiple files", async () => {
     const result = await searchFilesHandler(
-      { pattern: "hello", path: "src", regex: false, caseInsensitive: true, contextLines: 0, maxResults: 100, includeHidden: false },
+      {
+        pattern: "hello",
+        path: "src",
+        regex: false,
+        caseInsensitive: true,
+        contextLines: 0,
+        maxResults: 100,
+        includeHidden: false,
+      },
       configFor(fixture.root),
     );
     expect(result.ok).toBe(true);

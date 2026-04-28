@@ -12,7 +12,10 @@ interface Call {
   params?: unknown[];
 }
 
-function buildMockedMysql(rows: Record<string, unknown>[] = [], fields: { name: string; columnType?: number }[] = []) {
+function buildMockedMysql(
+  rows: Record<string, unknown>[] = [],
+  fields: { name: string; columnType?: number }[] = [],
+) {
   const calls: Call[] = [];
   const release = vi.fn();
   const conn = {
@@ -129,15 +132,33 @@ describe("mysql adapter (mocked)", () => {
 
   it("describeTable returns column info with primary key flag", async () => {
     const { createPool } = buildMockedMysql([
-      { column_name: "id", data_type: "int", is_nullable: "NO", column_default: null, column_key: "PRI" },
-      { column_name: "email", data_type: "varchar", is_nullable: "YES", column_default: null, column_key: "" },
+      {
+        column_name: "id",
+        data_type: "int",
+        is_nullable: "NO",
+        column_default: null,
+        column_key: "PRI",
+      },
+      {
+        column_name: "email",
+        data_type: "varchar",
+        is_nullable: "YES",
+        column_default: null,
+        column_key: "",
+      },
     ]);
     __setMysqlLoaderForTests(async () => ({ createPool }) as never);
     const adapter = await createMysqlAdapter(mysqlConfig(true));
     const cols = await adapter.describeTable("users");
     expect(cols).toEqual([
       { name: "id", dataType: "int", nullable: false, defaultValue: null, isPrimaryKey: true },
-      { name: "email", dataType: "varchar", nullable: true, defaultValue: null, isPrimaryKey: false },
+      {
+        name: "email",
+        dataType: "varchar",
+        nullable: true,
+        defaultValue: null,
+        isPrimaryKey: false,
+      },
     ]);
     await adapter.close();
   });
