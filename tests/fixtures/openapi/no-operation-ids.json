@@ -1,0 +1,25 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "No OperationIds API",
+    "version": "0.1.0"
+  },
+  "servers": [{ "url": "https://example.com" }],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "List users",
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "summary": "Create user",
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/health": {
+      "get": {
+        "responses": { "200": { "description": "OK" } }
+      }
+    }
+  }
+}

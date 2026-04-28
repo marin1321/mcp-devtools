@@ -1,0 +1,24 @@
+openapi: "3.0.3"
+info:
+  title: Petstore YAML
+  version: "2.0.0"
+servers:
+  - url: https://yaml.petstore.example.com/v2
+paths:
+  /animals:
+    get:
+      operationId: listAnimals
+      summary: List all animals
+      tags:
+        - animals
+      responses:
+        "200":
+          description: A list of animals
+    post:
+      operationId: createAnimal
+      summary: Create an animal
+      tags:
+        - animals
+      responses:
+        "201":
+          description: Animal created
