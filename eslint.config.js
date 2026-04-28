@@ -38,6 +38,7 @@ export default [
         AbortSignal: "readonly",
         NodeJS: "readonly",
         BufferEncoding: "readonly",
+        performance: "readonly",
       },
     },
     plugins: {
@@ -98,6 +99,9 @@ export default [
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-unnecessary-type-assertion": "off",
+      "@typescript-eslint/require-await": "off",
+      "@typescript-eslint/unbound-method": "off",
       "no-console": "off",
     },
   },
