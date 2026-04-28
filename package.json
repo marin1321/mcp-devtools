@@ -97,7 +97,7 @@
     "@typescript-eslint/parser": "^8.59.0",
     "@vitest/coverage-v8": "^4.0.0",
     "better-sqlite3": "^12.9.0",
-    "eslint": "^9.0.0",
+    "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-import": "^2.31.0",
     "mysql2": "^3.22.3",
