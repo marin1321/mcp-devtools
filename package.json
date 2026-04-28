@@ -1,6 +1,6 @@
 {
   "name": "@oscarmarin/mcp-devtools",
-  "version": "0.1.0-rc.1",
+  "version": "0.1.0",
   "description": "Production-grade MCP server that gives AI agents safe access to your local dev environment: filesystem, databases, processes, and OpenAPI specs.",
   "keywords": [
     "mcp",

@@ -6,9 +6,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 and uses [Conventional Commits](https://www.conventionalcommits.org/) so
 `semantic-release` can generate releases automatically.
 
-## [0.1.0-rc.1] - 2026-04-27
+## [0.1.0] - 2026-04-28
 
-First release candidate of the Phase 1 MVP. Ten of the fourteen v1 tools are
+First public release of the Phase 1 MVP. Ten of the fourteen v1 tools are
 shipped behind hardened security boundaries (scope validation, command
 allowlist, multi-layer database read-only enforcement). The remaining four
 (`run_command` and the OpenAPI / log / env tools) ship in later phases —
