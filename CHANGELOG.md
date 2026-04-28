@@ -6,14 +6,37 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 and uses [Conventional Commits](https://www.conventionalcommits.org/) so
 `semantic-release` can generate releases automatically.
 
+## [0.2.0] - 2026-04-28
+
+Phase 3 release: all 13 v1 tools fully implemented, HTTP transport, and
+community-readiness artifacts.
+
+### Added
+
+- **OpenAPI tools**:
+  - `parse_openapi` — parse OpenAPI 3.x and Swagger 2.0 specs (JSON/YAML),
+    extract operations summary with auto-generated operationIds, 200-op cap.
+  - `call_api` — execute HTTP requests by operationId with host restriction,
+    path/query param substitution, 30s timeout, 100KB response cap.
+- **HTTP transport** — `StreamableHTTPServerTransport` from MCP SDK, stateless
+  mode, graceful shutdown, configurable port via `transport: "http"`.
+- `CONTRIBUTING.md` — development setup, branch naming, commit convention,
+  adding tools guide.
+- `CODE_OF_CONDUCT.md` — Contributor Covenant v2.1.
+- Docs site at `mcp-devtools.oscarmarindev.com`.
+
+### Changed
+
+- README updated with HTTP quick start, expanded security section, all 13
+  tools in the tool table, and corrected npm badges.
+- OpenAPI docs replaced from stubs to full reference pages.
+
 ## [0.1.0] - 2026-04-28
 
-First public release of the Phase 1 MVP. Ten of the fourteen v1 tools are
-shipped behind hardened security boundaries (scope validation, command
-allowlist, multi-layer database read-only enforcement). The remaining four
-(`run_command` and the OpenAPI / log / env tools) ship in later phases —
-`run_command` actually ships now, the other three remain `NOT_IMPLEMENTED`
-stubs that respond cleanly without crashing the server.
+First public release of the Phase 1 + 2 MVP. Eleven tools shipped behind
+hardened security boundaries (scope validation, command allowlist, multi-layer
+database read-only enforcement). OpenAPI tools shipped as `NOT_IMPLEMENTED`
+stubs.
 
 ### Added
 
