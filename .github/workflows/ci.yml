@@ -62,6 +62,49 @@ jobs:
           files: ./coverage/lcov.info
           fail_ci_if_error: false
 
+  test-integration:
+    name: Integration Tests (Postgres + MySQL)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: mcp_test
+        options: >-
+          --health-cmd "pg_isready -U test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: test
+          MYSQL_DATABASE: mcp_test
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+        ports:
+          - 3306:3306
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Run integration tests
+        env:
+          CI_INTEGRATION: "true"
+          PG_CONNECTION_STRING: "postgresql://test:test@localhost:5432/mcp_test"
+          MYSQL_CONNECTION_STRING: "mysql://root:test@localhost:3306/mcp_test"
+        run: npx vitest run --config vitest.integration.config.ts
+
   build:
     name: Build
     runs-on: ubuntu-latest
