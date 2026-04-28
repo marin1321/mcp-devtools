@@ -91,10 +91,7 @@ describe("loadPlugins", () => {
       `,
     );
 
-    const result = await loadPlugins(
-      ["./plugin-a.mjs", "./plugin-b.mjs"],
-      tempDir,
-    );
+    const result = await loadPlugins(["./plugin-a.mjs", "./plugin-b.mjs"], tempDir);
     expect(result).toHaveLength(3);
     expect(result.map((t) => t.name)).toEqual(["tool_a1", "tool_a2", "tool_b1"]);
   });
@@ -128,10 +125,7 @@ describe("loadPlugins", () => {
       `,
     );
 
-    const result = await loadPlugins(
-      ["./nonexistent.mjs", "./good-after-bad.mjs"],
-      tempDir,
-    );
+    const result = await loadPlugins(["./nonexistent.mjs", "./good-after-bad.mjs"], tempDir);
     expect(result).toHaveLength(1);
     expect(result[0].name).toBe("survivor");
   });

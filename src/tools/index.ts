@@ -138,8 +138,7 @@ export const allTools: readonly ToolDefinition[] = [
   defineTool({
     name: "list_processes",
     title: "List processes",
-    description:
-      "List running processes, optionally filtered by name or listening port.",
+    description: "List running processes, optionally filtered by name or listening port.",
     inputSchema: ListProcessesInput,
     handler: listProcessesHandler,
   }),

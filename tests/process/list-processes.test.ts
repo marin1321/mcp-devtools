@@ -46,8 +46,7 @@ describe("listProcessesHandler", () => {
 
     for (const proc of filtered.data.processes) {
       const match =
-        proc.name.toLowerCase().includes("node") ||
-        proc.command.toLowerCase().includes("node");
+        proc.name.toLowerCase().includes("node") || proc.command.toLowerCase().includes("node");
       expect(match).toBe(true);
     }
   });

@@ -151,8 +151,7 @@ export function registerTool(
         return toolResultToCallToolResult(result);
       } catch (error) {
         if (auditLogger) {
-          const code =
-            error instanceof McpDevtoolsError ? error.code : "INTERNAL_ERROR";
+          const code = error instanceof McpDevtoolsError ? error.code : "INTERNAL_ERROR";
           auditLogger.log({
             timestamp: new Date(start).toISOString(),
             tool: definition.name,

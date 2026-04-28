@@ -8,10 +8,7 @@ export function registerDebugErrorPrompt(server: McpServer): void {
       description: "Systematically debug an error in your project using mcp-devtools tools",
       argsSchema: {
         error_message: z.string().describe("The error message or stack trace to debug"),
-        file_path: z
-          .string()
-          .optional()
-          .describe("Path to the file where the error occurs"),
+        file_path: z.string().optional().describe("Path to the file where the error occurs"),
       },
     },
     (args) => {

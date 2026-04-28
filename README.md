@@ -67,12 +67,12 @@ The MCP endpoint will be available at `http://localhost:3333`.
 
 ## Tools
 
-| Group      | Tools                                                                                    |
-| ---------- | ---------------------------------------------------------------------------------------- |
-| Filesystem | `read_file`, `write_file`, `list_directory`, `search_files`, `get_file_info`             |
-| Database   | `query_db`, `list_tables`, `describe_table`                                              |
-| Process    | `run_command`, `read_logs`, `get_env`, `list_processes`                                  |
-| OpenAPI    | `parse_openapi`, `call_api`                                                              |
+| Group      | Tools                                                                        |
+| ---------- | ---------------------------------------------------------------------------- |
+| Filesystem | `read_file`, `write_file`, `list_directory`, `search_files`, `get_file_info` |
+| Database   | `query_db`, `list_tables`, `describe_table`                                  |
+| Process    | `run_command`, `read_logs`, `get_env`, `list_processes`                      |
+| OpenAPI    | `parse_openapi`, `call_api`                                                  |
 
 Per-tool reference: [`docs/tools/`](./docs/tools/).
 
@@ -80,20 +80,20 @@ Per-tool reference: [`docs/tools/`](./docs/tools/).
 
 The server exposes read-only data via MCP Resources:
 
-| URI                        | Description                                  |
-| -------------------------- | -------------------------------------------- |
-| `devtools://tools`         | Catalog of all registered tools with schemas |
-| `devtools://server-info`   | Server version, transport, scope, tool count |
+| URI                      | Description                                  |
+| ------------------------ | -------------------------------------------- |
+| `devtools://tools`       | Catalog of all registered tools with schemas |
+| `devtools://server-info` | Server version, transport, scope, tool count |
 
 ## MCP Prompts
 
 Curated prompt templates for common development workflows:
 
-| Prompt              | Description                                                  |
-| ------------------- | ------------------------------------------------------------ |
-| `debug_error`       | Systematically debug an error using mcp-devtools tools       |
-| `code_review`       | Review a file for bugs, security issues, and code quality    |
-| `explore_codebase`  | Explore and understand a project's structure and conventions |
+| Prompt              | Description                                                      |
+| ------------------- | ---------------------------------------------------------------- |
+| `debug_error`       | Systematically debug an error using mcp-devtools tools           |
+| `code_review`       | Review a file for bugs, security issues, and code quality        |
+| `explore_codebase`  | Explore and understand a project's structure and conventions     |
 | `refactor_function` | Refactor a function for readability, performance, or testability |
 
 ## Plugin API

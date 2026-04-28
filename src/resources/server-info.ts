@@ -56,8 +56,13 @@ export function registerServerInfoResource(
     };
   };
 
-  server.registerResource("server_info", "devtools://server-info", {
-    description: "Server runtime information: version, transport, scope, tool count, and more.",
-    mimeType: "application/json",
-  }, readCallback);
+  server.registerResource(
+    "server_info",
+    "devtools://server-info",
+    {
+      description: "Server runtime information: version, transport, scope, tool count, and more.",
+      mimeType: "application/json",
+    },
+    readCallback,
+  );
 }

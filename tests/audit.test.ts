@@ -201,12 +201,7 @@ describe("AuditLogger integration with registerTool", () => {
       handler: (input) => Promise.resolve(ok({ doubled: input.n * 2 })),
     });
 
-    registerTool(
-      fake as unknown as Parameters<typeof registerTool>[0],
-      def,
-      config,
-      auditLogger,
-    );
+    registerTool(fake as unknown as Parameters<typeof registerTool>[0], def, config, auditLogger);
 
     const wrapped = fake.registerTool.mock.calls[0]?.[2] as (input: unknown) => Promise<unknown>;
     await wrapped({ n: 5 });
@@ -231,12 +226,7 @@ describe("AuditLogger integration with registerTool", () => {
       },
     });
 
-    registerTool(
-      fake as unknown as Parameters<typeof registerTool>[0],
-      def,
-      config,
-      auditLogger,
-    );
+    registerTool(fake as unknown as Parameters<typeof registerTool>[0], def, config, auditLogger);
 
     const wrapped = fake.registerTool.mock.calls[0]?.[2] as (input: unknown) => Promise<unknown>;
     await wrapped({});
@@ -259,12 +249,7 @@ describe("AuditLogger integration with registerTool", () => {
       handler: () => Promise.resolve(err("CUSTOM_CODE", "something broke")),
     });
 
-    registerTool(
-      fake as unknown as Parameters<typeof registerTool>[0],
-      def,
-      config,
-      auditLogger,
-    );
+    registerTool(fake as unknown as Parameters<typeof registerTool>[0], def, config, auditLogger);
 
     const wrapped = fake.registerTool.mock.calls[0]?.[2] as (input: unknown) => Promise<unknown>;
     await wrapped({});

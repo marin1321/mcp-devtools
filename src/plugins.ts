@@ -40,18 +40,13 @@ export async function loadPlugins(
 
   for (const raw of pluginPaths) {
     try {
-      const specifier = isAbsolute(raw) || raw.startsWith(".")
-        ? resolve(scopeRoot, raw)
-        : raw;
+      const specifier = isAbsolute(raw) || raw.startsWith(".") ? resolve(scopeRoot, raw) : raw;
 
       const mod = (await import(specifier)) as PluginModule;
       const exported = mod.default;
 
       if (!isToolDefinitionArray(exported)) {
-        logger.warn(
-          { plugin: raw },
-          "plugin does not default-export a ToolDefinition[]; skipping",
-        );
+        logger.warn({ plugin: raw }, "plugin does not default-export a ToolDefinition[]; skipping");
         continue;
       }
 
@@ -60,10 +55,7 @@ export async function loadPlugins(
         logger.info({ plugin: raw, tool: tool.name }, "loaded plugin tool");
       }
     } catch (error) {
-      logger.warn(
-        { plugin: raw, err: error },
-        "failed to load plugin; skipping",
-      );
+      logger.warn({ plugin: raw, err: error }, "failed to load plugin; skipping");
     }
   }
 

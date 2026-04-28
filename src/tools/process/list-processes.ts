@@ -9,10 +9,7 @@ import type { McpDevtoolsConfig } from "../../types/config.js";
 import { type ToolResult, err, ok } from "../../types/tool-result.js";
 
 export const ListProcessesInput = z.object({
-  name: z
-    .string()
-    .optional()
-    .describe("Filter processes by name substring (case-insensitive)"),
+  name: z.string().optional().describe("Filter processes by name substring (case-insensitive)"),
   port: z.number().int().positive().optional().describe("Filter by TCP listening port"),
   limit: z.number().int().min(1).max(200).default(50).describe("Maximum number of results"),
 });
@@ -66,8 +63,7 @@ export async function listProcessesHandler(
   if (input.name !== undefined) {
     const pattern = input.name.toLowerCase();
     entries = entries.filter(
-      (e) =>
-        e.name.toLowerCase().includes(pattern) || e.command.toLowerCase().includes(pattern),
+      (e) => e.name.toLowerCase().includes(pattern) || e.command.toLowerCase().includes(pattern),
     );
   }
 

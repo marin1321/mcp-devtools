@@ -36,8 +36,13 @@ export function registerToolCatalogResource(
     };
   };
 
-  server.registerResource("tool_catalog", "devtools://tools", {
-    description: "List of all registered tools with their metadata and input schemas.",
-    mimeType: "application/json",
-  }, readCallback);
+  server.registerResource(
+    "tool_catalog",
+    "devtools://tools",
+    {
+      description: "List of all registered tools with their metadata and input schemas.",
+      mimeType: "application/json",
+    },
+    readCallback,
+  );
 }
