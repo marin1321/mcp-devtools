@@ -9,6 +9,7 @@ loadDotenv({ quiet: true });
 
 export { McpDevtoolsServer } from "./server.js";
 export { loadConfig } from "./config.js";
+export { defineTool, type ToolDefinition } from "./tool-registry.js";
 export * from "./types/index.js";
 
 async function main(): Promise<void> {

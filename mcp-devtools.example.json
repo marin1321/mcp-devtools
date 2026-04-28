@@ -19,5 +19,13 @@
   },
   "transport": "stdio",
   "port": 3333,
-  "debug": false
+  "debug": false,
+  "plugins": [],
+  "audit": {
+    "enabled": false,
+    "path": "./mcp-devtools-audit.ndjson"
+  },
+  "auth": {
+    "token": "env:MCP_AUTH_TOKEN"
+  }
 }

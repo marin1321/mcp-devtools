@@ -10,6 +10,7 @@ export default [
       "dist/**",
       "coverage/**",
       "node_modules/**",
+      "docs-site/**",
       "*.config.js",
       "*.config.cjs",
       "vitest.integration.config.ts",

@@ -4,7 +4,12 @@ import { createServer, type Server as HttpServer } from "node:http";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 
-import { registerAllTools } from "./tool-registry.js";
+import { AuditLogger } from "./audit.js";
+import { resolveToken, validateBearerToken } from "./auth.js";
+import { loadPlugins } from "./plugins.js";
+import { registerAllPrompts } from "./prompts/index.js";
+import { registerAllResources } from "./resources/index.js";
+import { registerAllTools, registerTool } from "./tool-registry.js";
 import { type ConnectionPool, createConnectionPool } from "./tools/database/connection-pool.js";
 import { allTools } from "./tools/index.js";
 import { createTransport } from "./transport.js";
@@ -33,12 +38,18 @@ export class McpDevtoolsServer {
   private readonly config: McpDevtoolsConfig;
   private readonly server: McpServer;
   private readonly pool: ConnectionPool;
+  private readonly auditLogger: AuditLogger | null = null;
   private httpServer: HttpServer | null = null;
   private started = false;
 
   constructor(config: McpDevtoolsConfig) {
     this.config = config;
     this.pool = createConnectionPool(config.databases);
+
+    if (config.audit.enabled) {
+      this.auditLogger = new AuditLogger(config.audit.path, config.scope);
+    }
+
     this.server = new McpServer(
       {
         name: "mcp-devtools",
@@ -48,10 +59,14 @@ export class McpDevtoolsServer {
         capabilities: {
           tools: {},
           logging: {},
+          resources: {},
+          prompts: {},
         },
       },
     );
-    registerAllTools(this.server, allTools, this.config);
+    registerAllTools(this.server, allTools, this.config, this.auditLogger ?? undefined);
+    registerAllResources(this.server, this.config, allTools);
+    registerAllPrompts(this.server);
   }
 
   public getConnectionPool(): ConnectionPool {
@@ -62,19 +77,38 @@ export class McpDevtoolsServer {
     if (this.started) {
       return;
     }
+
+    if (this.config.plugins.length > 0) {
+      const pluginTools = await loadPlugins(this.config.plugins, this.config.scope);
+      for (const tool of pluginTools) {
+        registerTool(this.server, tool, this.config, this.auditLogger ?? undefined);
+        logger.debug({ tool: tool.name }, "registered plugin tool");
+      }
+    }
+
     const { transport, kind } = createTransport(this.config);
     await this.server.connect(transport);
 
     if (kind === "http") {
       const httpTransport = transport as StreamableHTTPServerTransport;
+      const resolvedToken = resolveToken(this.config.auth.token);
+
       this.httpServer = createServer((req, res) => {
+        if (resolvedToken) {
+          if (!validateBearerToken(req.headers.authorization, resolvedToken)) {
+            res.writeHead(401, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Unauthorized" }));
+            logger.warn({ ip: req.socket.remoteAddress }, "unauthorized HTTP request");
+            return;
+          }
+        }
         void httpTransport.handleRequest(req, res);
       });
       await new Promise<void>((resolve) => {
         this.httpServer!.listen(this.config.port, () => resolve());
       });
       logger.info(
-        { port: this.config.port },
+        { port: this.config.port, auth: !!resolvedToken },
         `mcp-devtools HTTP server listening on port ${this.config.port}`,
       );
     }
@@ -103,6 +137,7 @@ export class McpDevtoolsServer {
       this.httpServer = null;
     }
 
+    await this.auditLogger?.close();
     await this.pool.closeAll();
     await this.server.close();
     this.started = false;
