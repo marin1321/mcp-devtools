@@ -1,6 +1,6 @@
 {
   "name": "@oscarmarin/mcp-devtools",
-  "version": "0.0.0",
+  "version": "0.1.0-rc.1",
   "description": "Production-grade MCP server that gives AI agents safe access to your local dev environment: filesystem, databases, processes, and OpenAPI specs.",
   "keywords": [
     "mcp",
@@ -75,18 +75,27 @@
     "@modelcontextprotocol/sdk": "^1.29.0",
     "cosmiconfig": "^9.0.0",
     "dotenv": "^17.0.0",
+    "mime-types": "^3.0.2",
+    "picomatch": "^4.0.4",
     "pino": "^10.0.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/mime-types": "^3.0.1",
     "@types/node": "^20.14.0",
+    "@types/pg": "^8.20.0",
+    "@types/picomatch": "^4.0.3",
     "@typescript-eslint/eslint-plugin": "^8.59.0",
     "@typescript-eslint/parser": "^8.59.0",
     "@vitest/coverage-v8": "^4.0.0",
+    "better-sqlite3": "^12.9.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-import": "^2.31.0",
+    "mysql2": "^3.22.3",
+    "pg": "^8.20.0",
     "prettier": "^3.8.0",
     "tsup": "^8.5.0",
     "typescript": "^6.0.0",
@@ -110,6 +119,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": "false"
+    "provenance": true
   }
 }

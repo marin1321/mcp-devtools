@@ -7,7 +7,12 @@ import pino, { type Logger } from "pino";
  * Level controlled via `LOG_LEVEL` env var; `DEBUG=true` forces "debug".
  */
 
-const level = process.env["DEBUG"] === "true" ? "debug" : (process.env["LOG_LEVEL"] ?? "info");
+const level =
+  process.env["NODE_ENV"] === "test"
+    ? (process.env["LOG_LEVEL"] ?? "silent")
+    : process.env["DEBUG"] === "true"
+      ? "debug"
+      : (process.env["LOG_LEVEL"] ?? "info");
 
 export const logger: Logger = pino(
   {

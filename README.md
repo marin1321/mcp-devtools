@@ -9,8 +9,9 @@
 > A production-grade MCP server that gives AI agents (Claude, Cursor, Copilot, Continue, …)
 > safe, scoped access to your local development environment.
 
-> ⚠️ **Status:** Phase 0 — pre-MVP scaffolding. v0.1.0 is targeted for Phase 2.
-> Tool implementations land in Phase 1.
+> **Status:** Phase 1 release candidate (`v0.1.0-rc.1`). Ten of the fourteen
+> v1 tools are shipped behind hardened security boundaries; the remaining
+> four ship in later phases as `NOT_IMPLEMENTED` stubs that respond cleanly.
 
 ## Why
 
@@ -25,11 +26,8 @@ typed error taxonomy, version stamps, exponential backoff.
 
 ## Quick start
 
-> Phase 0 stub — the server is wired end-to-end but tool implementations are
-> still in progress.
-
 ```bash
-npx mcp-devtools
+npx @oscarmarin/mcp-devtools
 ```
 
 Add it to Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
@@ -49,12 +47,14 @@ Or Cursor (`~/.cursor/mcp.json`): same block.
 
 ## Tools
 
-| Group      | Tools                                                                        | Status  |
-| ---------- | ---------------------------------------------------------------------------- | ------- |
-| Filesystem | `read_file`, `write_file`, `list_directory`, `search_files`, `get_file_info` | stubbed |
-| Database   | `query_db`, `list_tables`, `describe_table`                                  | stubbed |
-| Process    | `run_command`, `read_logs`, `get_env`                                        | stubbed |
-| OpenAPI    | `parse_openapi`, `call_api`                                                  | stubbed |
+| Group      | Tools                                                                        | Status               |
+| ---------- | ---------------------------------------------------------------------------- | -------------------- |
+| Filesystem | `read_file`, `write_file`, `list_directory`, `search_files`, `get_file_info` | shipped              |
+| Database   | `query_db`, `list_tables`, `describe_table`                                  | shipped              |
+| Process    | `run_command`                                                                | shipped              |
+| Process    | `read_logs`, `get_env`                                                       | stub (Phase 2)       |
+| OpenAPI    | `parse_openapi`, `call_api`                                                  | stub (Phase 3)       |
+| Debug      | `echo_test`                                                                  | shipped (smoke tool) |
 
 Per-tool reference: [`docs/tools/`](./docs/tools/).
 
