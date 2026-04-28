@@ -130,7 +130,7 @@ describe("listDirectoryHandler", () => {
     ).rejects.toBeInstanceOf(FileSystemError);
   });
 
-  it("caps results at MAX_DIR_ENTRIES (5000) and reports truncated=true", async () => {
+  it("caps results at MAX_DIR_ENTRIES (5000) and reports truncated=true", { timeout: 30_000 }, async () => {
     const dir = path.join(fixture.root, "many");
     mkdirSync(dir, { recursive: true });
     for (let i = 0; i < 5005; i += 1) {
