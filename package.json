@@ -1,6 +1,6 @@
 {
   "name": "@oscarmarin/mcp-devtools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Production-grade MCP server that gives AI agents safe access to your local dev environment: filesystem, databases, processes, and OpenAPI specs.",
   "keywords": [
     "mcp",
@@ -55,6 +55,9 @@
   ],
   "engines": {
     "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsup",
@@ -124,8 +127,5 @@
       "optional": true
     }
   },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  }
+  "mcpName": "io.github.marin1321/mcp-devtools"
 }
