@@ -46,7 +46,13 @@ Requests without a valid token receive `401 Unauthorized`.
 When `audit.enabled: true`, every tool invocation is logged to an NDJSON file:
 
 ```json
-{"timestamp":"2026-04-28T12:00:00.000Z","tool":"read_file","inputSummary":{"path":"src/index.ts"},"durationMs":12,"ok":true}
+{
+  "timestamp": "2026-04-28T12:00:00.000Z",
+  "tool": "read_file",
+  "inputSummary": { "path": "src/index.ts" },
+  "durationMs": 12,
+  "ok": true
+}
 ```
 
 Input summaries are sanitized: secrets are masked, long strings are truncated.
@@ -59,10 +65,10 @@ Input summaries are sanitized: secrets are masked, long strings are truncated.
 
 All tools cap their output to prevent context window flooding:
 
-| Tool type | Cap |
-|-----------|-----|
-| File reads | 1 MB |
-| Command output | 100 KB per stream |
-| Database queries | 200 rows |
-| API responses | 100 KB body |
-| Log reads | 500 lines |
+| Tool type        | Cap               |
+| ---------------- | ----------------- |
+| File reads       | 1 MB              |
+| Command output   | 100 KB per stream |
+| Database queries | 200 rows          |
+| API responses    | 100 KB body       |
+| Log reads        | 500 lines         |

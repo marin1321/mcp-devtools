@@ -8,11 +8,11 @@ Supported engines: **PostgreSQL**, **MySQL**, **SQLite**.
 
 Execute a parameterized SQL query.
 
-| Input | Type | Required | Description |
-|-------|------|----------|-------------|
-| `connection` | `string` | no | Connection name (default: `"default"`) |
-| `sql` | `string` | yes | SQL query (SELECT only when readOnly) |
-| `params` | `unknown[]` | no | Query parameters |
+| Input        | Type        | Required | Description                            |
+| ------------ | ----------- | -------- | -------------------------------------- |
+| `connection` | `string`    | no       | Connection name (default: `"default"`) |
+| `sql`        | `string`    | yes      | SQL query (SELECT only when readOnly)  |
+| `params`     | `unknown[]` | no       | Query parameters                       |
 
 **Output:** `{ rows, rowCount, columns }`
 
@@ -26,10 +26,10 @@ Values are serialized for JSON safety: `Date` → ISO string, `Buffer` → base6
 
 List tables in a database.
 
-| Input | Type | Required | Description |
-|-------|------|----------|-------------|
-| `connection` | `string` | no | Connection name (default: `"default"`) |
-| `schema` | `string` | no | Schema filter (PostgreSQL) |
+| Input        | Type     | Required | Description                            |
+| ------------ | -------- | -------- | -------------------------------------- |
+| `connection` | `string` | no       | Connection name (default: `"default"`) |
+| `schema`     | `string` | no       | Schema filter (PostgreSQL)             |
 
 **Output:** `{ tables: [{ name, schema?, type }] }`
 
@@ -39,9 +39,9 @@ List tables in a database.
 
 Return column metadata for a table.
 
-| Input | Type | Required | Description |
-|-------|------|----------|-------------|
-| `connection` | `string` | no | Connection name (default: `"default"`) |
-| `table` | `string` | yes | Table name |
+| Input        | Type     | Required | Description                            |
+| ------------ | -------- | -------- | -------------------------------------- |
+| `connection` | `string` | no       | Connection name (default: `"default"`) |
+| `table`      | `string` | yes      | Table name                             |
 
 **Output:** `{ columns: [{ name, type, nullable, defaultValue, isPrimaryKey }] }`

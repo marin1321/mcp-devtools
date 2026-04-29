@@ -3,9 +3,7 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   title: "mcp-devtools",
   description: "AI-native developer tools via Model Context Protocol",
-  head: [
-    ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
-  ],
+  head: [["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }]],
   themeConfig: {
     nav: [
       { text: "Guide", link: "/guide/getting-started" },
@@ -14,7 +12,10 @@ export default defineConfig({
       {
         text: "v1.0.0",
         items: [
-          { text: "Changelog", link: "https://github.com/marin1321/mcp-devtools/blob/main/CHANGELOG.md" },
+          {
+            text: "Changelog",
+            link: "https://github.com/marin1321/mcp-devtools/blob/main/CHANGELOG.md",
+          },
           { text: "npm", link: "https://www.npmjs.com/package/@oscarmarin/mcp-devtools" },
         ],
       },

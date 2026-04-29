@@ -46,22 +46,22 @@ Zero config is supported — all keys have sensible defaults.
 
 ## Key Reference
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| `scope` | `string` | `"./"` | Root directory for filesystem operations |
-| `allowedCommands` | `string[]` | `["npm","node","python","git","make"]` | Binaries that `run_command` may execute |
-| `commandTimeoutMs` | `number` | `30000` | Maximum command execution time |
-| `commandOutputMaxBytes` | `number` | `102400` | Output cap per stream (stdout/stderr) |
-| `databases` | `Record<string, DatabaseConfig>` | `{}` | Named database connections |
-| `logs.paths` | `string[]` | `[]` | Glob patterns for log files |
-| `logs.maxLines` | `number` | `500` | Maximum lines returned by `read_logs` |
-| `transport` | `"stdio" \| "http"` | `"stdio"` | Transport mode |
-| `port` | `number` | `3333` | HTTP server port (when `transport: "http"`) |
-| `debug` | `boolean` | `false` | Enable debug-level logging |
-| `plugins` | `string[]` | `[]` | Plugin module paths to load at startup |
-| `audit.enabled` | `boolean` | `false` | Enable invocation audit log |
-| `audit.path` | `string` | `"./mcp-devtools-audit.ndjson"` | Audit log file path |
-| `auth.token` | `string?` | `undefined` | Bearer token for HTTP auth |
+| Key                     | Type                             | Default                                | Description                                 |
+| ----------------------- | -------------------------------- | -------------------------------------- | ------------------------------------------- |
+| `scope`                 | `string`                         | `"./"`                                 | Root directory for filesystem operations    |
+| `allowedCommands`       | `string[]`                       | `["npm","node","python","git","make"]` | Binaries that `run_command` may execute     |
+| `commandTimeoutMs`      | `number`                         | `30000`                                | Maximum command execution time              |
+| `commandOutputMaxBytes` | `number`                         | `102400`                               | Output cap per stream (stdout/stderr)       |
+| `databases`             | `Record<string, DatabaseConfig>` | `{}`                                   | Named database connections                  |
+| `logs.paths`            | `string[]`                       | `[]`                                   | Glob patterns for log files                 |
+| `logs.maxLines`         | `number`                         | `500`                                  | Maximum lines returned by `read_logs`       |
+| `transport`             | `"stdio" \| "http"`              | `"stdio"`                              | Transport mode                              |
+| `port`                  | `number`                         | `3333`                                 | HTTP server port (when `transport: "http"`) |
+| `debug`                 | `boolean`                        | `false`                                | Enable debug-level logging                  |
+| `plugins`               | `string[]`                       | `[]`                                   | Plugin module paths to load at startup      |
+| `audit.enabled`         | `boolean`                        | `false`                                | Enable invocation audit log                 |
+| `audit.path`            | `string`                         | `"./mcp-devtools-audit.ndjson"`        | Audit log file path                         |
+| `auth.token`            | `string?`                        | `undefined`                            | Bearer token for HTTP auth                  |
 
 ## Secret Indirection
 

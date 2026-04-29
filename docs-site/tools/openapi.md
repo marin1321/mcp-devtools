@@ -6,9 +6,9 @@ Tools for parsing OpenAPI specs and executing HTTP requests by operation ID.
 
 Parse an OpenAPI 3.x or Swagger 2.0 spec and return a summary of operations.
 
-| Input | Type | Required | Description |
-|-------|------|----------|-------------|
-| `specPath` | `string` | yes | Path to spec file (JSON or YAML, within scope) |
+| Input      | Type     | Required | Description                                    |
+| ---------- | -------- | -------- | ---------------------------------------------- |
+| `specPath` | `string` | yes      | Path to spec file (JSON or YAML, within scope) |
 
 **Output:** `{ title, version, servers, operations: [{ operationId, method, path, summary }] }`
 
@@ -22,13 +22,13 @@ Capped at 200 operations.
 
 Execute an HTTP request by operation ID from an OpenAPI spec.
 
-| Input | Type | Required | Description |
-|-------|------|----------|-------------|
-| `specPath` | `string` | yes | Path to spec file |
-| `operationId` | `string` | yes | Operation ID to invoke |
-| `params` | `Record<string, string>` | no | Path and query parameters |
-| `body` | `unknown` | no | Request body (JSON) |
-| `headers` | `Record<string, string>` | no | Additional headers |
+| Input         | Type                     | Required | Description               |
+| ------------- | ------------------------ | -------- | ------------------------- |
+| `specPath`    | `string`                 | yes      | Path to spec file         |
+| `operationId` | `string`                 | yes      | Operation ID to invoke    |
+| `params`      | `Record<string, string>` | no       | Path and query parameters |
+| `body`        | `unknown`                | no       | Request body (JSON)       |
+| `headers`     | `Record<string, string>` | no       | Additional headers        |
 
 **Output:** `{ status, headers, body, url }`
 

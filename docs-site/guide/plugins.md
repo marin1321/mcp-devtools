@@ -41,15 +41,15 @@ export default [
 
 The following are exported from `@oscarmarin/mcp-devtools`:
 
-| Export | Description |
-|--------|-------------|
-| `defineTool(def)` | Type-safe helper to create a `ToolDefinition` |
-| `ToolDefinition` | Interface for tool registration |
-| `ToolResult<T>` | Discriminated union for handler return values |
-| `ok(data, meta?)` | Create a success result |
-| `err(code, msg, details?, meta?)` | Create an error result |
-| `McpDevtoolsError` | Base class for domain errors |
-| `McpDevtoolsConfig` | Read-only config type |
+| Export                            | Description                                   |
+| --------------------------------- | --------------------------------------------- |
+| `defineTool(def)`                 | Type-safe helper to create a `ToolDefinition` |
+| `ToolDefinition`                  | Interface for tool registration               |
+| `ToolResult<T>`                   | Discriminated union for handler return values |
+| `ok(data, meta?)`                 | Create a success result                       |
+| `err(code, msg, details?, meta?)` | Create an error result                        |
+| `McpDevtoolsError`                | Base class for domain errors                  |
+| `McpDevtoolsConfig`               | Read-only config type                         |
 
 ## Error Handling
 
