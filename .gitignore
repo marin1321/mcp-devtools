@@ -83,6 +83,5 @@ mcp-devtools-plan.md
 # Local planning artifacts — internal task breakdowns, not for the public repo
 PLAN/
 
-# Docs site — deployed separately to Vercel
-docs-site/
+# Vercel project config
 .vercel/
