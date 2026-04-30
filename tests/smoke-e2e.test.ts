@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return */
 /**
  * End-to-end smoke tests — exercises every tool, resource, prompt,
  * and feature through the MCP server using InMemoryTransport.
  */
-import { createServer, type Server as HttpServer } from "node:http";
-import { writeFileSync, mkdirSync, existsSync, readFileSync, unlinkSync, rmSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { writeFileSync, mkdirSync, existsSync, readFileSync, rmSync } from "node:fs";
+import { createServer } from "node:http";
 import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
