@@ -56,7 +56,7 @@ beforeAll(async () => {
   // Seed test files
   writeFileSync(join(SMOKE_DIR, "hello.txt"), "Hello from mcp-devtools!\nLine 2\nLine 3\n");
   mkdirSync(join(SMOKE_DIR, "subdir"), { recursive: true });
-  writeFileSync(join(SMOKE_DIR, "subdir", "nested.ts"), 'export const x = 42;\n');
+  writeFileSync(join(SMOKE_DIR, "subdir", "nested.ts"), "export const x = 42;\n");
 
   // Seed log file
   const logLines = [
@@ -98,7 +98,9 @@ beforeAll(async () => {
   // Create SQLite table
   const pool = server.getConnectionPool();
   const db = await pool.get("default");
-  await db.query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)");
+  await db.query(
+    "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)",
+  );
   await db.query("INSERT INTO users (name, email) VALUES ('Alice', 'alice@test.com')");
   await db.query("INSERT INTO users (name, email) VALUES ('Bob', 'bob@test.com')");
 });
